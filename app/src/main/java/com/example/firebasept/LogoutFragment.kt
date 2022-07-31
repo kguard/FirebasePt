@@ -65,7 +65,7 @@ class LogoutFragment : Fragment() {
         }
         quit.setOnClickListener {
             firebaseAuth.currentUser?.delete()
-            googleSignInClient.signOut()
+            googleSignInClient.revokeAccess()
             parentFragmentManager.beginTransaction().replace(R.id.frame,LoginFragment()).commit()
 
         }
