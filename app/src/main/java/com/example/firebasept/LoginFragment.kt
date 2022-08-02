@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.firebasept.databinding.FragmentLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -45,24 +46,22 @@ class LoginFragment : Fragment() {
     }
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var firebaseAuth: FirebaseAuth
-    private var tokenId: String? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val inflate = inflater.inflate(R.layout.fragment_login, container, false)
-        val googleSignIn=inflate.findViewById<com.google.android.gms.common.SignInButton>(R.id.google_login)
+        val binding = FragmentLoginBinding.inflate(inflater,container,false)
         val sign= GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         googleSignInClient= GoogleSignIn.getClient(requireActivity(),sign)
-        googleSignIn.setOnClickListener{
+        binding.googleLogin.setOnClickListener{
             signInGoogle()
         }
         firebaseAuth= FirebaseAuth.getInstance()
-        return inflate
+        return binding.root
     }
     fun signInGoogle(){
         val signIntent= googleSignInClient.signInIntent

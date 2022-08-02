@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import com.example.firebasept.databinding.FragmentLogoutBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -44,34 +45,29 @@ class LogoutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val inflate = inflater.inflate(R.layout.fragment_logout, container, false)
+        val binding=FragmentLogoutBinding.inflate(inflater, container, false)
         firebaseAuth= FirebaseAuth.getInstance()
-        val googleSignOut=inflate.findViewById<Button>(R.id.sign_out)
-        val quit=inflate.findViewById<Button>(R.id.quit)
-
-        val uid=inflate.findViewById<TextView>(R.id.uid)
-        val email=inflate.findViewById<TextView>(R.id.email)
 
         val sign= GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         googleSignInClient= GoogleSignIn.getClient(requireActivity(),sign)
-        googleSignOut.setOnClickListener {
+        binding.signOut.setOnClickListener {
             firebaseAuth.signOut()
             googleSignInClient.signOut()
             parentFragmentManager.beginTransaction().replace(R.id.frame,LoginFragment()).commit()
 
         }
-        quit.setOnClickListener {
+        binding.quit.setOnClickListener {
             firebaseAuth.currentUser?.delete()
             googleSignInClient.revokeAccess()
             parentFragmentManager.beginTransaction().replace(R.id.frame,LoginFragment()).commit()
 
         }
-        uid.text = firebaseAuth.currentUser?.uid
-        email.text = firebaseAuth.currentUser?.email
-        return inflate
+        binding.uid.text = firebaseAuth.currentUser?.uid
+        binding.email.text = firebaseAuth.currentUser?.email
+        return binding.root
     }
 
     companion object {
