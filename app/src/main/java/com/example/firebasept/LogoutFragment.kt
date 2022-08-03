@@ -48,8 +48,8 @@ class LogoutFragment : Fragment() {
         val binding=FragmentLogoutBinding.inflate(inflater, container, false)
         firebaseAuth= FirebaseAuth.getInstance()
 
-        val sign= GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+        val sign= GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN) //액티비티에 하나 선언, 프래그먼트에서 이벤트 발생
+            .requestIdToken(getString(R.string.default_web_client_id))// 액티비에서 이벤트 처리
             .requestEmail()
             .build()
         googleSignInClient= GoogleSignIn.getClient(requireActivity(),sign)

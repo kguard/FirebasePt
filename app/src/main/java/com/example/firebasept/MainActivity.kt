@@ -24,14 +24,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
     }
-    public override fun onStart() {
+    override fun onStart() {//계정 관련 일을 여기다 적음
         super.onStart()
         val account=FirebaseAuth.getInstance().currentUser
         if(account !== null)
         {
             supportFragmentManager.beginTransaction().add(R.id.frame,LogoutFragment()).commit()
+            //begindTracsaction은 프래그먼트 삭제 하고 보여주는거 아니면 프ㄱ래그먼트 숨기고 보여주는거
+            //stack의 문제
             //어플 처음 실행시에 로그인 되어있는지 확인 (자동 로그인)
         }
+
         else if(account == null)
         {
             supportFragmentManager.beginTransaction().add(R.id.frame,LoginFragment()).commit()
